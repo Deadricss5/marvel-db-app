@@ -15,6 +15,7 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "import/extensions": [
+      "error",
       "ignorePackages",
       {
         "js": "never",
