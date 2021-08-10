@@ -12,8 +12,18 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
   "plugins": ["react", "@typescript-eslint"],
+  
   "rules": {
+    "dot-notation": [1, { "allowKeywords": false }],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "import/extensions": [
       "error",
       "ignorePackages",
