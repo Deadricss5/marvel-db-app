@@ -19,7 +19,7 @@ class MarvelApi {
     this.baseURL = baseURL;
   }
 
-  listHeroes(limit: number) {
+  getHeroes(limit: number) {
     return axios.get(
       `${this.baseURL}/characters?limit=${limit}&${generateApiKey()}`,
     );
@@ -37,7 +37,7 @@ class MarvelApi {
     );
   }
 
-  listComics(heroId: number) {
+  getComics(heroId: number) {
     return axios.get(
       `${this.baseURL}/characters/${heroId}/comics?${generateApiKey()}`,
     );
