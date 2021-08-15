@@ -1,12 +1,12 @@
-export type serverRes = {
+export interface serverRes {
     description: string,
     id: string;
     name: string,
     thumbnail: { path: string, extension: string};
 }
-export type heroes = {
+export interface heroes {
     description: string,
     id: string;
-    heroName: string,
+    name: string,
     thumbnail: string;
 }
