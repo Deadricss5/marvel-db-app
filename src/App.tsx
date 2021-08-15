@@ -1,14 +1,15 @@
 import React from 'react';
-import './App.css';
+import MarvelApi from './api/api';
+
+import Header from './components/header';
+
+MarvelApi.getHeroByName('Dr.').then((res) => { console.log(res); });
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>marvel-db-app</h1>
-      </header>
+    <div>
+      <Header />
     </div>
   );
 }
-
 export default App;
