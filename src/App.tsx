@@ -1,15 +1,24 @@
-import React from 'react';
-import MarvelApi from './api/api';
+import React, { useState } from 'react';
 import Header from './components/header';
 import Container from './containers/container';
-
-MarvelApi.getHeroByName('Dr.').then((res) => { console.log(res); });
+// import Spinner from './components/spinner';
 
 function App() {
+  const [searchInput, setSearchInput] = useState('');
+
+  const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    return setSearchInput(e.target.value);
+  };
   return (
-    <div>
+    <div className="app-container">
       <Header />
-      <Container />
+      <input
+        value={searchInput}
+        onChange={onChangeSearch}
+        placeholder="Enter hero name"
+        className="input"
+      />
+      <Container name={searchInput} />
     </div>
   );
 }
