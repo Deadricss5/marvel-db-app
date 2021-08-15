@@ -9,25 +9,27 @@ import Typography from '@material-ui/core/Typography';
 interface Props {
     thumbnail: string;
     id: string;
-    heroName: string;
-    description: string;
+    name: string;
 }
 
 const useStyles = makeStyles(() => {
   return createStyles({
     root: {
-      maxWidth: 345,
+      width: 345,
       margin: '10px',
     },
     media: {
-      height: 0,
+      height: '150px',
       paddingTop: '56.25%',
+    },
+    title: {
+      height: '65px',
     },
   });
 });
 
 export default function MediaCard({
-  thumbnail, id, heroName, description,
+  thumbnail, id, name,
 }: Props) {
   const classes = useStyles();
   const fullThmb: string = `${thumbnail}.jpg`;
@@ -38,14 +40,11 @@ export default function MediaCard({
         <CardMedia
           className={classes.media}
           image={fullThmb}
-          title={heroName}
+          title={name}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {heroName}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {description}
+          <Typography className={classes.title} gutterBottom variant="h5" component="h2">
+            {name}
           </Typography>
         </CardContent>
       </CardActionArea>
