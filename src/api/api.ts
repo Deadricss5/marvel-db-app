@@ -21,7 +21,12 @@ class MarvelApi {
 
   getHeroes(limit: number) {
     return axios.get(
-      `${this.baseURL}/characters?limit=${limit}&${generateApiKey()}`,
+      `${this.baseURL}/characters?&${generateApiKey()}`,
+      {
+        params: {
+          limit,
+        },
+      },
     );
   }
 
@@ -33,13 +38,18 @@ class MarvelApi {
 
   getHeroByName(name: string) {
     return axios.get(
-      `${this.baseURL}/characters?nameStartsWith=${name}&${generateApiKey()}`,
+      `${this.baseURL}/characters?&${generateApiKey()}`,
+      {
+        params: {
+          nameStartsWith: name,
+        },
+      },
     );
   }
 
-  getComics(heroId: number) {
+  getComics(heroId: number, limit: number = 20, offset: number = 0) {
     return axios.get(
-      `${this.baseURL}/characters/${heroId}/comics?${generateApiKey()}`,
+      `${this.baseURL}/characters/${heroId}/comics?limit=${limit}&offset=${offset}${generateApiKey()}`,
     );
   }
 }
