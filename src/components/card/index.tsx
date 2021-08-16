@@ -5,11 +5,13 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Typography from '@material-ui/core/Typography';
+import Zoom from '@material-ui/core/Grow';
 
 interface Props {
     thumbnail: string;
     id: string;
     name: string;
+    timeout: number;
 }
 
 const useStyles = makeStyles(() => {
@@ -29,25 +31,27 @@ const useStyles = makeStyles(() => {
 });
 
 export default function MediaCard({
-  thumbnail, id, name,
+  thumbnail, id, name, timeout,
 }: Props) {
   const classes = useStyles();
   const fullThmb: string = `${thumbnail}.jpg`;
 
   return (
-    <Card className={classes.root} key={id}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={fullThmb}
-          title={name}
-        />
-        <CardContent>
-          <Typography className={classes.title} gutterBottom variant="h5" component="h2">
-            {name}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <Zoom in={Boolean(id)} timeout={timeout}>
+      <Card className={classes.root} key={id}>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image={fullThmb}
+            title={name}
+          />
+          <CardContent>
+            <Typography className={classes.title} gutterBottom variant="h5" component="h2">
+              {name}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Zoom>
   );
 }
