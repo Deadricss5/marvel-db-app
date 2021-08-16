@@ -7,13 +7,12 @@ function App() {
   const [searchInput, setSearchInput] = useState('');
 
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    return setSearchInput(e.target.value);
+    setTimeout(() => { setSearchInput(e.target.value); }, 100);
   };
   return (
     <div className="app-container">
       <Header />
       <input
-        value={searchInput}
         onChange={onChangeSearch}
         placeholder="Enter hero name"
         className="input"
