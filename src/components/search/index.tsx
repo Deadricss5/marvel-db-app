@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SearchInput = () => {
+const SearchInput = (): JSX.Element => {
   return (
     <input type="search" className="search-input" />
   );
