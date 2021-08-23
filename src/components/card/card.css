@@ -1,0 +1,11 @@
+.card {
+    width: 345px;
+    margin: 10px;
+}
+.card-media {
+    height: 150px;
+    padding-top: 56.25%;
+}
+.card-title {
+    height: 65px;
+}

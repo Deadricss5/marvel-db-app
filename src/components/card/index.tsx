@@ -1,52 +1,36 @@
 import React from 'react';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Typography from '@material-ui/core/Typography';
 import Zoom from '@material-ui/core/Grow';
+import './card.css';
 
-interface Props {
+interface IProps {
     thumbnail: string;
     id: string;
     name: string;
     timeout: number;
 }
 
-const useStyles = makeStyles(() => {
-  return createStyles({
-    root: {
-      width: 345,
-      margin: '10px',
-    },
-    media: {
-      height: '150px',
-      paddingTop: '56.25%',
-    },
-    title: {
-      height: '65px',
-    },
-  });
-});
-
 export default function MediaCard({
   thumbnail, id, name, timeout,
-}: Props) {
-  const classes = useStyles();
-  const fullThmb: string = `${thumbnail}.jpg`;
+}: IProps): JSX.Element {
+  const fullThumb = `${thumbnail}.jpg`;
 
   return (
     <Zoom in={Boolean(id)} timeout={timeout}>
-      <Card className={classes.root} key={id}>
+      <Card className="card" key={id}>
         <CardActionArea>
           <CardMedia
-            className={classes.media}
-            image={fullThmb}
+            className="card-media"
+            image={fullThumb}
             title={name}
+            aria-label={id}
           />
           <CardContent>
-            <Typography className={classes.title} gutterBottom variant="h5" component="h2">
+            <Typography className="card-title" gutterBottom variant="h5" aria-label={id} component="h2">
               {name}
             </Typography>
           </CardContent>
