@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios';
+
 export interface serverRes {
     description: string,
     id: string;
@@ -9,4 +11,12 @@ export interface heroes {
     id: string;
     name: string,
     thumbnail: string;
+}
+export interface IMarvelApi {
+    baseURL: string;
+
+    getHeroes(limit: number, offset: number): Promise<AxiosResponse<void>>;
+    getHeroById(heroId: number): Promise<AxiosResponse<void>>;
+    getHeroByName(name: string, offset: number): Promise<AxiosResponse<void>>;
+    getComics(heroId: number, limit: number, offset: number): Promise<AxiosResponse<void>>;
 }
