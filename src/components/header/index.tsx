@@ -2,7 +2,7 @@ import React from 'react';
 import logoMarvel from '../../assets/logo/logoMarvel.png';
 import './header.css';
 
-const Header = () => {
+const Header = (): JSX.Element => {
   return (
     <div className="header-container">
       <div className="header-content">
