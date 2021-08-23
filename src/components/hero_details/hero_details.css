@@ -1,0 +1,55 @@
+.hero {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    max-width: 95%;
+}
+.hero-details {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 50px 0;
+}
+.hero-details__thumbnail {
+    max-width: 350px;
+    margin-left: 20px;
+}
+.hero-details__description {
+    max-width: 400px;
+}
+.hero-comics {
+    display: flex;
+    flex-direction: column;
+}
+.hero-comics__title {
+    margin-left: 10px;
+}
+.hero-comics__cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.hero-comics__card {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    box-sizing: content-box;
+    margin: 10px;
+    padding: 10px;
+    min-height: 300px;
+}
+.hero-comics__card-title {
+    text-align: center;
+    max-width: 150px;
+    margin: 10px 0;
+}
+
+a {
+    text-decoration: none;
+}
+a:hover .hero-comics__card{
+    background-color: #F3F3F3;
+}
+a:hover .hero-comics__card-title{
+    color: #E81127;
+}
