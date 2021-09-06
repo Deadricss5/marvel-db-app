@@ -4,7 +4,7 @@ import MediaCard from '../../components/card';
 import Spinner from '../../components/spinner';
 import './container.css';
 import MarvelApi from '../../api/api';
-import { serverRes } from '../../types/types';
+import { serverResponse } from '../../types/types';
 
 interface IProps {
   name: string;
@@ -117,7 +117,7 @@ class Container extends React.Component<IProps, IState> {
     return (
       <div className="container">
         <div className="cards-container">
-          {cards.map((item: serverRes) => {
+          {cards.map((item: serverResponse) => {
             const animationTimeout = (Math.round(Math.random() * (7 - 3) + 1) * 200);
             return (
               <MediaCard

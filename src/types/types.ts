@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 
-export interface serverRes {
+export interface serverResponse {
     description: string,
     id: string;
     name: string,
