@@ -14,7 +14,6 @@ export interface heroes {
 }
 export interface IMarvelApi {
     baseURL: string;
-
     getHeroes(limit: number, offset: number): Promise<AxiosResponse<void>>;
     getHeroById(heroId: number): Promise<AxiosResponse<void>>;
     getHeroByName(name: string, offset: number): Promise<AxiosResponse<void>>;
