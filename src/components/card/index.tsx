@@ -22,7 +22,7 @@ export default function MediaCard({
   const fullThumb = `${thumbnail}.jpg`;
 
   return (
-    <Zoom in={Boolean(id)} timeout={timeout}>
+    <Zoom in timeout={timeout}>
       <Card className="card" key={id}>
         <CardActionArea>
           <CardMedia
