@@ -9,3 +9,4 @@
 // 2d1a91bd2a@emailnax.com
 export const keyPublic = '0eae8530cd8dcf4e3f02d5aea4380a1f';
 export const keyPrivate = '5bd75bc5d706b69eb73833f9f77b8b28e207e3f7';
+export const baseURL = 'https://gateway.marvel.com:443/v1/public';

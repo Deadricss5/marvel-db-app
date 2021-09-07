@@ -1,20 +1,20 @@
 import axios from 'axios';
 import md5 from 'md5';
 import { IMarvelApi } from '../types/types';
-import { keyPrivate, keyPublic } from './.env/variables';
+import { keyPrivate, keyPublic, baseURL } from './.env/variables';
 
 function generateApiKey(): string {
-  const ts: number = Date.now();
+  const timeStamp: number = Date.now();
 
-  const hash: string = md5(ts + keyPrivate + keyPublic);
+  const hash: string = md5(timeStamp + keyPrivate + keyPublic);
 
-  return `ts=${ts}&apikey=${keyPublic}&hash=${hash}`;
+  return `ts=${timeStamp}&apikey=${keyPublic}&hash=${hash}`;
 }
 class MarvelApi implements IMarvelApi {
   baseURL: string;
 
   constructor() {
-    this.baseURL = 'https://gateway.marvel.com:443/v1/public';
+    this.baseURL = baseURL;
   }
 
   getHeroes(offset = 0) {
