@@ -1,6 +1,5 @@
 import React from 'react';
 import Pagination from '@material-ui/lab/Pagination';
-import './pagination.css';
 
 interface IProps {
   page: number;
@@ -12,7 +11,7 @@ const Pages = (props: IProps): JSX.Element => {
   const { pages, onChange, page = 1 } = props;
   return (
     <div>
-      <Pagination className="pagination" count={pages} onChange={onChange} page={page} />
+      <Pagination style={{ margin: '20px 0' }} className="pagination" count={pages} onChange={onChange} page={page} />
     </div>
   );
 };
