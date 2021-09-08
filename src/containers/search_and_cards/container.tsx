@@ -31,7 +31,7 @@ class Container extends React.Component<IProps, IState> {
   }
 
   async componentDidMount(): Promise<void> {
-    await this.getHeroes();
+    await this.getHeroByName();
     this.setLoading(false);
   }
 
@@ -40,29 +40,17 @@ class Container extends React.Component<IProps, IState> {
     const { name } = this.props;
     const { page } = this.state;
     const offset = page * 20 - 20;
+    const heroName = name || null;
     if (prevState.page !== page) {
-      if (name !== '') {
-        this.setLoading(true);
-        await this.getHeroByName(name, offset);
-        this.setLoading(false);
-      } else {
-        this.setLoading(true);
-        await this.getHeroes(offset);
-        this.setLoading(false);
-      }
+      this.setLoading(true);
+      await this.getHeroByName(offset, heroName);
+      this.setLoading(false);
     }
     if (prevProps !== this.props) {
-      if (name === '') {
-        this.setPage(1);
-        this.setLoading(true);
-        await this.getHeroes(offset);
-        this.setLoading(false);
-      } else {
-        this.setPage(1);
-        this.setLoading(true);
-        await this.getHeroByName(name, offset);
-        this.setLoading(false);
-      }
+      this.setPage(1);
+      this.setLoading(true);
+      await this.getHeroByName(offset, heroName);
+      this.setLoading(false);
     }
   }
 
@@ -77,17 +65,7 @@ class Container extends React.Component<IProps, IState> {
     this.setState({ page: value });
   }
 
-  getHeroes(offset = 0): Promise<void> {
-    return MarvelApi.getHeroes(offset).then(
-      (response) => {
-        const cards = response.data.data.results;
-        const pages = Math.ceil(response.data.data.total / 20);
-        this.setState({ cards, pages });
-      },
-    );
-  }
-
-  getHeroByName(name: string, offset = 0): Promise<void> {
+  getHeroByName(offset = 0, name?: string | null): Promise<void> {
     return MarvelApi.getHeroByName(name, offset).then(
       (response) => {
         const cards = response.data.data.results;

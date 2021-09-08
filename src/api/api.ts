@@ -33,7 +33,7 @@ class MarvelApi implements IMarvelApi {
     );
   }
 
-  getHeroByName(name: string, offset = 0) {
+  getHeroByName(name?: string | null, offset = 0) {
     return axios.get(
       `${this.baseURL}/characters?&${API_KEY}`,
       {
