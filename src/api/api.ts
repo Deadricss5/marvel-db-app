@@ -1,45 +1,53 @@
 import axios from 'axios';
 import md5 from 'md5';
+import { IMarvelApi } from '../types/types';
 
-function generateApiKey(): string {
-  const keyPublic: string = '78e53f63a7b15473e3c6ce8e5e3c7f71';
-  const keyPrivate: string = 'ded020dc438316c8741477116c2c1b19d8035aca';
-  const ts: number = Date.now();
+const { REACT_APP_PUBLIC_KEY, REACT_APP_PRIVATE_KEY } = process.env;
+const timeStamp: number = Date.now();
+const hash: string = md5(timeStamp + <string>REACT_APP_PRIVATE_KEY + REACT_APP_PUBLIC_KEY);
+const API_KEY = `ts=${timeStamp}&apikey=${REACT_APP_PUBLIC_KEY}&hash=${hash}`;
 
-  const hash: string = md5(ts + keyPrivate + keyPublic);
-
-  return `ts=${ts}&apikey=${keyPublic}&hash=${hash}`;
-}
-
-class MarvelApi {
+class MarvelApi implements IMarvelApi {
   baseURL: string;
 
   constructor() {
-    const baseURL: string = 'https://gateway.marvel.com:443/v1/public';
-    this.baseURL = baseURL;
+    this.baseURL = 'https://gateway.marvel.com:443/v1/public'
   }
 
-  listHeroes(limit: number) {
+  getHeroes(offset = 0) {
     return axios.get(
-      `${this.baseURL}/characters?limit=${limit}&${generateApiKey()}`,
+      `${this.baseURL}/characters?&${API_KEY}`,
+      {
+        params: {
+          limit: 20,
+          offset,
+        },
+      },
     );
   }
 
   getHeroById(heroId: number) {
     return axios.get(
-      `${this.baseURL}/characters/${heroId}?${generateApiKey()}`,
+      `${this.baseURL}/characters/${heroId}?${API_KEY}`,
     );
   }
 
-  getHeroByName(name: string) {
+  getHeroByName(name?: string | null, offset = 0) {
     return axios.get(
-      `${this.baseURL}/characters?nameStartsWith=${name}&${generateApiKey()}`,
+      `${this.baseURL}/characters?&${API_KEY}`,
+      {
+        params: {
+          nameStartsWith: name,
+          limit: 20,
+          offset,
+        },
+      },
     );
   }
 
-  listComics(heroId: number) {
+  getComics(heroId: number) {
     return axios.get(
-      `${this.baseURL}/characters/${heroId}/comics?${generateApiKey()}`,
+      `${this.baseURL}/characters/${heroId}/comics?${API_KEY}`,
     );
   }
 }

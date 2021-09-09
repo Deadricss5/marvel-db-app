@@ -2,12 +2,14 @@ import React from 'react';
 import logoMarvel from '../../assets/logo/logoMarvel.png';
 import './header.css';
 
-const Header = () => (
-  <div className="header-container">
-    <div className="header-content">
-      <img src={logoMarvel} alt="Marvel Logo" />
+const Header = (): JSX.Element => {
+  return (
+    <div className="header-container">
+      <div className="header-content">
+        <a href="/"><img src={logoMarvel} alt="Marvel Logo" /></a>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Header;

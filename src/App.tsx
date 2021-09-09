@@ -1,15 +1,12 @@
 import React from 'react';
-import MarvelApi from './api/api';
-
 import Header from './components/header';
+import MainPage from './containers/main-page';
 
-MarvelApi.getHeroByName('Dr.').then((res) => { console.log(res); });
-
-function App() {
+export default function App(): JSX.Element {
   return (
-    <div>
+    <div className="app-container">
       <Header />
+      <MainPage value />
     </div>
   );
 }
-export default App;
