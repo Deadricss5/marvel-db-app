@@ -2,8 +2,7 @@ import axios from 'axios';
 import md5 from 'md5';
 import { IMarvelApi } from '../types/types';
 
-const { REACT_APP_PUBLIC_KEY, REACT_APP_PRIVATE_KEY, REACT_APP_BASE_URL } = process.env;
-
+const { REACT_APP_PUBLIC_KEY, REACT_APP_PRIVATE_KEY } = process.env;
 const timeStamp: number = Date.now();
 const hash: string = md5(timeStamp + <string>REACT_APP_PRIVATE_KEY + REACT_APP_PUBLIC_KEY);
 const API_KEY = `ts=${timeStamp}&apikey=${REACT_APP_PUBLIC_KEY}&hash=${hash}`;
@@ -12,7 +11,7 @@ class MarvelApi implements IMarvelApi {
   baseURL: string;
 
   constructor() {
-    this.baseURL = <string>REACT_APP_BASE_URL;
+    this.baseURL = 'https://gateway.marvel.com:443/v1/public'
   }
 
   getHeroes(offset = 0) {
