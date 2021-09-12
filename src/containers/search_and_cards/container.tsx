@@ -7,20 +7,16 @@ import './container.css';
 import MarvelApi from '../../api/api';
 import { serverResponse } from '../../types/types';
 
-type IProps = RouteComponentProps & {
-  name?: string | null;
-  page?: number;
-}
 interface IState {
   pages: number;
   cards: [];
   loading: boolean;
 }
 
-class Container extends React.Component<IProps, IState> {
+class Container extends React.Component<RouteComponentProps, IState> {
   elms: [];
 
-  constructor(props: IProps) {
+  constructor(props: RouteComponentProps) {
     super(props);
     this.elms = [];
     this.state = {
@@ -47,7 +43,7 @@ class Container extends React.Component<IProps, IState> {
   }
 
   // eslint-disable-next-line max-len
-  async componentDidUpdate(prevProps: Readonly<IProps>): Promise<void> {
+  async componentDidUpdate(prevProps: Readonly<RouteComponentProps>): Promise<void> {
     const { location } = this.props;
     const params = new URLSearchParams(location.search);
     const page: number = Number(params.get('page')) || 1;
