@@ -1,8 +1,13 @@
 export interface IProps {
-  id: number;
+  match: {
+    params: {
+      id: number;
+    }
+  }
 }
 
 export interface ServerResponse {
+  id: number;
   description: string,
   title: string;
   urls: [ { url: string } ];
@@ -16,5 +21,5 @@ export interface IState {
     name: string;
     description: string;
     thumbnail: string;
-  }
+  };
 }

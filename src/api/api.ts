@@ -11,7 +11,7 @@ class MarvelApi implements IMarvelApi {
   baseURL: string;
 
   constructor() {
-    this.baseURL = 'https://gateway.marvel.com:443/v1/public'
+    this.baseURL = 'https://gateway.marvel.com:443/v1/public';
   }
 
   getHeroes(offset = 0) {
