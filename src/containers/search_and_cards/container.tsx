@@ -31,8 +31,11 @@ class Container extends React.Component<IProps, IState> {
   }
 
   async componentDidMount(): Promise<void> {
-    const { page, name } = this.props;
+    const { location } = this.props;
+    const params = new URLSearchParams(location.search);
+    const page: number = Number(params.get('page')) || 1;
     let offset = page * 20 - 20;
+    const name = params.get('name');
     const heroName = name || null;
     await this.getHeroByName(offset, heroName);
     this.setLoading(false);
@@ -45,14 +48,12 @@ class Container extends React.Component<IProps, IState> {
 
   // eslint-disable-next-line max-len
   async componentDidUpdate(prevProps: Readonly<IProps>): Promise<void> {
-    const { name, page } = this.props;
+    const { location } = this.props;
+    const params = new URLSearchParams(location.search);
+    const page: number = Number(params.get('page')) || 1;
     const offset = page * 20 - 20;
+    const name = params.get('name');
     const heroName = name || null;
-    if (prevProps.page !== page) {
-      this.setLoading(true);
-      await this.getHeroByName(offset, heroName);
-      this.setLoading(false);
-    }
     if (prevProps !== this.props) {
       this.setLoading(true);
       await this.getHeroByName(offset, heroName);
