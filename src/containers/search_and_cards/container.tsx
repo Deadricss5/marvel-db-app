@@ -1,4 +1,5 @@
 import React from 'react';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import Pagination from '../../components/pagination';
 import MediaCard from '../../components/card';
 import Spinner from '../../components/spinner';
@@ -6,11 +7,11 @@ import './container.css';
 import MarvelApi from '../../api/api';
 import { serverResponse } from '../../types/types';
 
-interface IProps {
-  name: string;
+type IProps = RouteComponentProps & {
+  name: string | null;
+  page: number;
 }
 interface IState {
-  page: number;
   pages: number;
   cards: [];
   loading: boolean;
@@ -23,7 +24,6 @@ class Container extends React.Component<IProps, IState> {
     super(props);
     this.elms = [];
     this.state = {
-      page: 1,
       pages: 1,
       cards: [],
       loading: true,
@@ -31,23 +31,29 @@ class Container extends React.Component<IProps, IState> {
   }
 
   async componentDidMount(): Promise<void> {
-    await this.getHeroByName();
+    const { page, name } = this.props;
+    let offset = page * 20 - 20;
+    const heroName = name || null;
+    await this.getHeroByName(offset, heroName);
     this.setLoading(false);
+    const { pages } = this.state;
+    if (page > pages) {
+      offset = pages * 20 - 20;
+      await this.getHeroByName(offset, heroName);
+    }
   }
 
   // eslint-disable-next-line max-len
-  async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>): Promise<void> {
-    const { name } = this.props;
-    const { page } = this.state;
+  async componentDidUpdate(prevProps: Readonly<IProps>): Promise<void> {
+    const { name, page } = this.props;
     const offset = page * 20 - 20;
     const heroName = name || null;
-    if (prevState.page !== page) {
+    if (prevProps.page !== page) {
       this.setLoading(true);
       await this.getHeroByName(offset, heroName);
       this.setLoading(false);
     }
     if (prevProps !== this.props) {
-      this.setPage(1);
       this.setLoading(true);
       await this.getHeroByName(offset, heroName);
       this.setLoading(false);
@@ -59,10 +65,6 @@ class Container extends React.Component<IProps, IState> {
       this.setState({ loading: value });
     }
     setTimeout(() => { this.setState({ loading: value }); }, 700);
-  }
-
-  setPage(value: number): void {
-    this.setState({ page: value });
   }
 
   getHeroByName(offset = 0, name?: string | null): Promise<void> {
@@ -77,13 +79,19 @@ class Container extends React.Component<IProps, IState> {
 
   render(): JSX.Element {
     const {
-      cards, loading, pages, page,
+      cards, loading, pages,
     } = this.state;
+    const { page, history, name } = this.props;
     let pagination: JSX.Element | null = (
       <Pagination
         pages={pages}
         page={page}
-        onChange={(e: React.ChangeEvent<unknown>, p: number) => { this.setPage(p); }}
+        onChange={(e: React.ChangeEvent<unknown>, p: number) => {
+          history.push({
+            pathname: '/',
+            search: name ? `?name=${name}&page=${p}` : `?page=${p}`,
+          });
+        }}
       />
     );
     if (loading) {
@@ -114,4 +122,4 @@ class Container extends React.Component<IProps, IState> {
   }
 }
 
-export default Container;
+export default withRouter(Container);
