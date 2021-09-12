@@ -8,8 +8,8 @@ import MarvelApi from '../../api/api';
 import { serverResponse } from '../../types/types';
 
 type IProps = RouteComponentProps & {
-  name: string | null;
-  page: number;
+  name?: string | null;
+  page?: number;
 }
 interface IState {
   pages: number;
@@ -82,7 +82,10 @@ class Container extends React.Component<IProps, IState> {
     const {
       cards, loading, pages,
     } = this.state;
-    const { page, history, name } = this.props;
+    const { history, location } = this.props;
+    const params = new URLSearchParams(location.search);
+    const page: number = Number(params.get('page')) || 1;
+    const name = params.get('name');
     let pagination: JSX.Element | null = (
       <Pagination
         pages={pages}

@@ -19,7 +19,6 @@ interface IProps {
 
 export default function MainPage({ location, history }: IProps): JSX.Element {
   const params = new URLSearchParams(location.search);
-  const page: number = Number(params.get('page')) || 1;
   const heroName: string = params.get('name') || '';
   return (
     <div className="main-page">
@@ -35,7 +34,7 @@ export default function MainPage({ location, history }: IProps): JSX.Element {
         className="input"
         value={heroName}
       />
-      <Container name={heroName} page={page} />
+      <Container />
     </div>
   );
 }
