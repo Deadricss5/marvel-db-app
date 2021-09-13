@@ -31,8 +31,7 @@ class Container extends React.Component<RouteComponentProps, IState> {
     const params = new URLSearchParams(location.search);
     const page: number = Number(params.get('page')) || 1;
     let offset = page * 20 - 20;
-    const name = params.get('name');
-    const heroName = name || null;
+    const heroName = params.get('name') || null;
     await this.getHeroByName(offset, heroName);
     this.setLoading(false);
     const { pages } = this.state;
@@ -48,8 +47,7 @@ class Container extends React.Component<RouteComponentProps, IState> {
     const params = new URLSearchParams(location.search);
     const page: number = Number(params.get('page')) || 1;
     const offset = page * 20 - 20;
-    const name = params.get('name');
-    const heroName = name || null;
+    const heroName = params.get('name') || null;
     if (prevProps !== this.props) {
       this.setLoading(true);
       await this.getHeroByName(offset, heroName);
@@ -81,7 +79,7 @@ class Container extends React.Component<RouteComponentProps, IState> {
     const { history, location } = this.props;
     const params = new URLSearchParams(location.search);
     const page: number = Number(params.get('page')) || 1;
-    const name = params.get('name');
+    const heroName = params.get('name');
     let pagination: JSX.Element | null = (
       <Pagination
         pages={pages}
@@ -89,7 +87,7 @@ class Container extends React.Component<RouteComponentProps, IState> {
         onChange={(e: React.ChangeEvent<unknown>, p: number) => {
           history.push({
             pathname: '/',
-            search: name ? `?name=${name}&page=${p}` : `?page=${p}`,
+            search: heroName ? `?name=${heroName}&page=${p}` : `?page=${p}`,
           });
         }}
       />
