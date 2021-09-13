@@ -1,23 +1,9 @@
 import React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import Container from '../search_and_cards/container';
 import './main-page.css';
 
-interface IProps {
-  location: {
-    search: string,
-  };
-  history: {
-    length: number,
-    location: {
-      pathname: string;
-      search: string;
-    }
-    push(path: string): void;
-    replace(path: string): void;
-  };
-}
-
-export default function MainPage({ location, history }: IProps): JSX.Element {
+export default function MainPage({ location, history }: RouteComponentProps): JSX.Element {
   const params = new URLSearchParams(location.search);
   const heroName: string = params.get('name') || '';
   return (
@@ -25,7 +11,9 @@ export default function MainPage({ location, history }: IProps): JSX.Element {
       <input
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           if (e.target.value) {
-            history.push(`/?name=${e.target.value}`);
+            history.push({
+              search: `?name=${e.target.value}`,
+            });
           } else {
             history.push('/');
           }
