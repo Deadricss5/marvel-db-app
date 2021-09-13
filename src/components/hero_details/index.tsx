@@ -20,7 +20,8 @@ class HeroDetails extends React.Component<IProps, IState> {
   }
 
   async componentDidMount(): Promise<void> {
-    const { id } = this.props;
+    // eslint-disable-next-line react/destructuring-assignment
+    const { id } = this.props.match.params;
     await this.getHeroDetails(id);
     await this.getComics(id);
     this.setLoading(false);

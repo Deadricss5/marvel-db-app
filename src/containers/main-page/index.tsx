@@ -1,37 +1,28 @@
 import React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import Container from '../search_and_cards/container';
 import './main-page.css';
 
-interface IState {
-  searchInput: string;
+export default function MainPage({ location, history }: RouteComponentProps): JSX.Element {
+  const params = new URLSearchParams(location.search);
+  const heroName: string = params.get('name') || '';
+  return (
+    <div className="main-page">
+      <input
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          if (e.target.value) {
+            history.push({
+              search: `?name=${e.target.value}`,
+            });
+          } else {
+            history.push('/');
+          }
+        }}
+        placeholder="Enter hero name"
+        className="input"
+        value={heroName}
+      />
+      <Container />
+    </div>
+  );
 }
-interface IProps {
-  value: boolean;
-}
-
-class MainPage extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = {
-      searchInput: '',
-    };
-  }
-
-  render(): JSX.Element {
-    const { searchInput } = this.state;
-    return (
-      <div className="main-page">
-        <input
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            this.setState({ searchInput: e.target.value });
-          }}
-          placeholder="Enter hero name"
-          className="input"
-        />
-        <Container name={searchInput} />
-      </div>
-    );
-  }
-}
-
-export default MainPage;

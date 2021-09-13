@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import {
   CardMedia,
@@ -22,22 +23,24 @@ export default function MediaCard({
   const fullThumb = `${thumbnail}.jpg`;
 
   return (
-    <Zoom in timeout={timeout}>
-      <Card className="card" key={id}>
-        <CardActionArea>
-          <CardMedia
-            className="card-media"
-            image={fullThumb}
-            title={name}
-            aria-label={id}
-          />
-          <CardContent>
-            <Typography className="card-title" gutterBottom variant="h5" aria-label={id} component="h2">
-              {name}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
-    </Zoom>
+    <Link to={`heroes/${id}`}>
+      <Zoom in timeout={timeout}>
+        <Card className="card" key={id}>
+          <CardActionArea>
+            <CardMedia
+              className="card-media"
+              image={fullThumb}
+              title={name}
+              aria-label={id}
+            />
+            <CardContent>
+              <Typography className="card-title" gutterBottom variant="h5" aria-label={id} component="h2">
+                {name}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </Zoom>
+    </Link>
   );
 }
