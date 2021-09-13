@@ -1,4 +1,6 @@
-
+:root {
+    --show-page-animation: show-page 1.5s forwards;
+}
 .hero {
     display: flex;
     align-items: center;
@@ -10,21 +12,21 @@
     flex-direction: row;
     flex-wrap: wrap;
     margin: 50px 0;
-    animation: show-page 1.5s forwards;
+    animation: var(--show-page-animation);
 }
 .hero-details__thumbnail {
     max-width: 350px;
     margin-left: 20px;
-    animation: show-page 1.5s forwards;
+    animation: var(--show-page-animation);
 }
 .hero-details__description {
     max-width: 400px;
-    animation: show-page 1.5s forwards;
+    animation: var(--show-page-animation);
 }
 .hero-comics {
     display: flex;
     flex-direction: column;
-    animation: show-page 1.5s forwards;
+    animation: var(--show-page-animation);
 }
 .hero-comics__title {
     margin-left: 10px;
@@ -33,7 +35,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    animation: show-page 1.5s forwards;
+    animation: var(--show-page-animation);
 }
 .hero-comics__card {
     display: flex;
@@ -43,7 +45,7 @@
     margin: 10px;
     padding: 10px;
     min-height: 300px;
-    animation: show-page 1.5s forwards;
+    animation: var(--show-page-animation);
 }
 .hero-comics__card-title {
     text-align: center;
