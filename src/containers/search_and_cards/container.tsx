@@ -1,107 +1,96 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import Pagination from '../../components/pagination';
 import MediaCard from '../../components/card';
 import Spinner from '../../components/spinner';
 import './container.css';
-import MarvelApi from '../../api/api';
-import { serverResponse } from '../../types/types';
+import { serverResponse, IState, DispatchType } from '../../types/types';
 
-interface IState {
-  pages: number;
-  cards: [];
-  loading: boolean;
+interface IProps extends RouteComponentProps {
+  dispatch?: DispatchType;
+  loading?: boolean;
+  cards?: [];
+  pages?: number;
+  page?: number;
 }
 
-class Container extends React.Component<RouteComponentProps, IState> {
-  elms: [];
-
-  constructor(props: RouteComponentProps) {
+class Container extends React.Component<IProps> {
+  // eslint-disable-next-line no-useless-constructor
+  constructor(props: IProps) {
     super(props);
-    this.elms = [];
-    this.state = {
-      pages: 1,
-      cards: [],
-      loading: true,
-    };
   }
 
-  async componentDidMount(): Promise<void> {
-    const { location } = this.props;
+  componentDidMount(): void {
+    const { location, dispatch } = this.props;
     const params = new URLSearchParams(location.search);
     const page: number = Number(params.get('page')) || 1;
-    let offset = page * 20 - 20;
     const heroName = params.get('name') || null;
-    await this.getHeroByName(offset, heroName);
-    this.setLoading(false);
-    const { pages } = this.state;
-    if (page > pages) {
-      offset = pages * 20 - 20;
-      await this.getHeroByName(offset, heroName);
-    }
-  }
-
-  // eslint-disable-next-line max-len
-  async componentDidUpdate(prevProps: Readonly<RouteComponentProps>): Promise<void> {
-    const { location } = this.props;
-    const params = new URLSearchParams(location.search);
-    const page: number = Number(params.get('page')) || 1;
     const offset = page * 20 - 20;
+    if (dispatch) {
+      dispatch({
+        type: 'HEROES_REQUEST',
+        name: heroName,
+        offset,
+        page,
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps: Readonly<IProps>): void {
+    const { location, dispatch } = this.props;
+    const params = new URLSearchParams(location.search);
+    const page: number = Number(params.get('page')) || 1;
     const heroName = params.get('name') || null;
-    if (prevProps !== this.props) {
-      this.setLoading(true);
-      await this.getHeroByName(offset, heroName);
-      this.setLoading(false);
+    const offset = page * 20 - 20;
+    if (location.search !== prevProps.location.search) {
+      if (dispatch) {
+        dispatch({
+          type: 'HEROES_REQUEST',
+          name: heroName,
+          offset,
+          page,
+        });
+      }
     }
-  }
-
-  setLoading(value: boolean): void {
-    if (value) {
-      this.setState({ loading: value });
-    }
-    setTimeout(() => { this.setState({ loading: value }); }, 700);
-  }
-
-  getHeroByName(offset = 0, name?: string | null): Promise<void> {
-    return MarvelApi.getHeroByName(name, offset).then(
-      (response) => {
-        const cards = response.data.data.results;
-        const pages = Math.ceil(response.data.data.total / 20);
-        this.setState({ cards, pages });
-      },
-    );
   }
 
   render(): JSX.Element {
     const {
-      cards, loading, pages,
-    } = this.state;
-    const { history, location } = this.props;
+      history,
+      location,
+      cards,
+      loading,
+      pages,
+    } = this.props;
     const params = new URLSearchParams(location.search);
     const page: number = Number(params.get('page')) || 1;
     const heroName = params.get('name');
-    let pagination: JSX.Element | null = (
-      <Pagination
-        pages={pages}
-        page={page}
-        onChange={(e: React.ChangeEvent<unknown>, p: number) => {
-          history.push({
-            pathname: '/',
-            search: heroName ? `?name=${heroName}&page=${p}` : `?page=${p}`,
-          });
-        }}
-      />
-    );
+    let pagination: JSX.Element | null = null;
+    if (typeof pages === 'number') {
+      pagination = (
+        <Pagination
+          pages={pages}
+          page={page}
+          onChange={(e: React.ChangeEvent<unknown>, p: number) => {
+            history.push({
+              pathname: '/',
+              search: heroName ? `?name=${heroName}&page=${p}` : `?page=${p}`,
+            });
+          }}
+        />
+      );
+    }
+    if (pages === 1) {
+      pagination = null;
+    }
     if (loading) {
       return <Spinner />;
-    }
-    if (pages <= 1) {
-      pagination = null;
     }
     return (
       <div className="container">
         <div className="cards-container">
-          {cards.map((item: serverResponse) => {
+          {cards?.map((item: serverResponse) => {
             const animationTimeout = (Math.round(Math.random() * (7 - 3) + 1) * 200);
             return (
               <MediaCard
@@ -119,5 +108,8 @@ class Container extends React.Component<RouteComponentProps, IState> {
     );
   }
 }
+const mapStateToProps = (state: IState) => {
+  return state;
+};
 
-export default withRouter(Container);
+export default connect(mapStateToProps)(withRouter(Container));
