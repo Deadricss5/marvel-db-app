@@ -7,9 +7,8 @@ import { IState, IProps, ServerResponse } from './types';
 
 class HeroDetails extends React.Component<IProps, IState> {
   componentDidMount(): void {
-    const { match } = this.props;
+    const { match, dispatch } = this.props;
     const { id } = match.params;
-    const { dispatch } = this.props;
     dispatch({ type: 'HERO_DETAILS_REQUEST', id });
   }
 
