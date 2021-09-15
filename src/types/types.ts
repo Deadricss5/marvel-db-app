@@ -18,8 +18,8 @@ export interface IAction {
     payload: {
         comics: [],
         cards: [],
-        pages: number,
-        page: number,
+        totalPages: number,
+        currentPage: number,
         hero: {
             id: string,
             description: string,
@@ -54,7 +54,7 @@ export type SET_HEROES_ACTION = {
     type: string
     name: string | null
     offset?: number
-    page?: number
+    currentPage?: number
 }
 export type HeroDetailsAction = {
     type: string

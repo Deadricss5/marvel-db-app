@@ -33,16 +33,16 @@ export function* getHeroDetailsSaga({ id }: SET_HERO_DETAILS_ACTION): Generator 
 }
 
 // eslint-disable-next-line max-len
-export function* getHeroesCardsSaga({ name = null, offset = 1, page }: SET_HEROES_ACTION): Generator {
+export function* getHeroesCardsSaga({ name = null, offset = 1, currentPage }: SET_HEROES_ACTION): Generator {
   yield put({ type: 'HEROES_REQUEST_STARTED' });
   const response = yield getHeroes(offset, name);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const pages = Math.ceil(response.total / 20);
+  const totalPages = Math.ceil(response.total / 20);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const cards = response.results;
-  yield put({ type: 'SET_HEROES_CARDS', payload: { cards, pages, page } });
+  yield put({ type: 'SET_HEROES_CARDS', payload: { cards, totalPages, currentPage } });
   yield wait(500);
   yield put({ type: 'HEROES_REQUEST_SUCCEEDED' });
 }

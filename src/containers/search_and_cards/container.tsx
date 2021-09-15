@@ -11,12 +11,11 @@ interface IProps extends RouteComponentProps {
   dispatch?: DispatchType;
   loading?: boolean;
   cards?: [];
-  pages?: number;
-  page?: number;
+  totalPages?: number;
+  currentPage?: number;
 }
 
 class Container extends React.Component<IProps> {
-  // eslint-disable-next-line no-useless-constructor
   constructor(props: IProps) {
     super(props);
   }
@@ -24,15 +23,15 @@ class Container extends React.Component<IProps> {
   componentDidMount(): void {
     const { location, dispatch } = this.props;
     const params = new URLSearchParams(location.search);
-    const page: number = Number(params.get('page')) || 1;
+    const currentPage: number = Number(params.get('page')) || 1;
     const heroName = params.get('name') || null;
-    const offset = page * 20 - 20;
+    const offset = currentPage * 20 - 20;
     if (dispatch) {
       dispatch({
         type: 'HEROES_REQUEST',
         name: heroName,
         offset,
-        page,
+        currentPage,
       });
     }
   }
@@ -40,16 +39,16 @@ class Container extends React.Component<IProps> {
   componentDidUpdate(prevProps: Readonly<IProps>): void {
     const { location, dispatch } = this.props;
     const params = new URLSearchParams(location.search);
-    const page: number = Number(params.get('page')) || 1;
+    const currentPage: number = Number(params.get('page')) || 1;
     const heroName = params.get('name') || null;
-    const offset = page * 20 - 20;
+    const offset = currentPage * 20 - 20;
     if (location.search !== prevProps.location.search) {
       if (dispatch) {
         dispatch({
           type: 'HEROES_REQUEST',
           name: heroName,
           offset,
-          page,
+          currentPage,
         });
       }
     }
@@ -61,16 +60,16 @@ class Container extends React.Component<IProps> {
       location,
       cards,
       loading,
-      pages,
+      totalPages,
     } = this.props;
     const params = new URLSearchParams(location.search);
     const page: number = Number(params.get('page')) || 1;
     const heroName = params.get('name');
     let pagination: JSX.Element | null = null;
-    if (typeof pages === 'number') {
+    if (typeof totalPages === 'number') {
       pagination = (
         <Pagination
-          pages={pages}
+          pages={totalPages}
           page={page}
           onChange={(e: React.ChangeEvent<unknown>, p: number) => {
             history.push({
@@ -81,7 +80,7 @@ class Container extends React.Component<IProps> {
         />
       );
     }
-    if (pages === 1) {
+    if (totalPages === 1) {
       pagination = null;
     }
     if (loading) {

@@ -48,8 +48,8 @@ export default function reducer(state = InitState, action: IAction) {
       return {
         ...state,
         cards: action.payload.cards,
-        pages: action.payload.pages,
-        page: action.payload.page,
+        totalPages: action.payload.totalPages,
+        currentPage: action.payload.currentPage,
       };
     default:
       return state;
