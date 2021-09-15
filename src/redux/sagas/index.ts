@@ -23,7 +23,7 @@ async function getHeroDetails(id: number): Promise<void> {
   return request.data.data.results[0];
 }
 
-export function* setHeroDetails({ id }: SET_HERO_DETAILS_ACTION): Generator {
+export function* getHeroDetailsSaga({ id }: SET_HERO_DETAILS_ACTION): Generator {
   yield put({ type: 'HERO_DETAILS_REQUEST_STARTED' });
   const hero = yield getHeroDetails(id);
   const comics = yield getComics(id);
@@ -32,7 +32,8 @@ export function* setHeroDetails({ id }: SET_HERO_DETAILS_ACTION): Generator {
   yield put({ type: 'HERO_DETAILS_REQUEST_SUCCEEDED' });
 }
 
-export function* setHeroesCards({ name = null, offset = 1, page }: SET_HEROES_ACTION): Generator {
+// eslint-disable-next-line max-len
+export function* getHeroesCardsSaga({ name = null, offset = 1, page }: SET_HEROES_ACTION): Generator {
   yield put({ type: 'HEROES_REQUEST_STARTED' });
   const response = yield getHeroes(offset, name);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -46,8 +47,8 @@ export function* setHeroesCards({ name = null, offset = 1, page }: SET_HEROES_AC
   yield put({ type: 'HEROES_REQUEST_SUCCEEDED' });
 }
 export function* watchSaga(): Generator {
-  yield takeEvery('HEROES_REQUEST', setHeroesCards);
-  yield takeEvery('HERO_DETAILS_REQUEST', setHeroDetails);
+  yield takeEvery('HEROES_REQUEST', getHeroesCardsSaga);
+  yield takeEvery('HERO_DETAILS_REQUEST', getHeroDetailsSaga);
 }
 
 export default function* rootSaga(): Generator {
