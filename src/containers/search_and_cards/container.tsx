@@ -21,12 +21,20 @@ class Container extends React.Component<IProps> {
   }
 
   componentDidMount(): void {
+    this.dispatchAction('DidMount');
+  }
+
+  componentDidUpdate(prevProps: Readonly<IProps>): void {
+    this.dispatchAction('DidUpdate', prevProps);
+  }
+
+  dispatchAction = (lifeCycle: string, prevProps?: Readonly<IProps>): void => {
     const { location, dispatch } = this.props;
     const params = new URLSearchParams(location.search);
     const currentPage: number = Number(params.get('page')) || 1;
     const heroName = params.get('name') || null;
     const offset = currentPage * 20 - 20;
-    if (dispatch) {
+    if (lifeCycle === 'DidMount' && dispatch) {
       dispatch({
         type: 'HEROES_REQUEST',
         name: heroName,
@@ -34,25 +42,15 @@ class Container extends React.Component<IProps> {
         currentPage,
       });
     }
-  }
-
-  componentDidUpdate(prevProps: Readonly<IProps>): void {
-    const { location, dispatch } = this.props;
-    const params = new URLSearchParams(location.search);
-    const currentPage: number = Number(params.get('page')) || 1;
-    const heroName = params.get('name') || null;
-    const offset = currentPage * 20 - 20;
-    if (location.search !== prevProps.location.search) {
-      if (dispatch) {
-        dispatch({
-          type: 'HEROES_REQUEST',
-          name: heroName,
-          offset,
-          currentPage,
-        });
-      }
+    if (lifeCycle === 'DidUpdate' && prevProps !== undefined && location.search !== prevProps.location.search && dispatch) {
+      dispatch({
+        type: 'HEROES_REQUEST',
+        name: heroName,
+        offset,
+        currentPage,
+      });
     }
-  }
+  };
 
   render(): JSX.Element {
     const {
