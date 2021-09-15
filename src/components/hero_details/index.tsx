@@ -32,11 +32,13 @@ class HeroDetails extends React.Component<IProps, IState> {
           <div className="hero-comics__cards">
             {comics.map((el: ServerResponse) => {
               const src = `${el.thumbnail.path}/portrait_xlarge.${el.thumbnail.extension}`;
+              const { url } = el.urls[0];
+              const { title, id } = el;
               return (
-                <a href={el.urls[0].url} target="_blank" rel="noreferrer" key={el.id}>
+                <a href={url} target="_blank" rel="noreferrer" key={id}>
                   <Paper elevation={2} className="hero-comics__card">
-                    <img src={src} alt={el.title} title={el.title} />
-                    <h5 className="hero-comics__card-title">{el.title}</h5>
+                    <img src={src} alt={title} title={title} />
+                    <h5 className="hero-comics__card-title">{title}</h5>
                   </Paper>
                 </a>
               );
