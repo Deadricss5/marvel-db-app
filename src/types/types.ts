@@ -13,13 +13,11 @@ export interface IMarvelApi {
     getHeroByName(name: string, offset: number): Promise<AxiosResponse<void>>;
     getComics(heroId: number, limit: number, offset: number): Promise<AxiosResponse<void>>;
 }
-export interface IAction {
+export interface IAction{
     type: string,
     payload: {
-        comics: [],
-        cards: [],
-        totalPages: number,
         currentPage: number,
+        comics: [],
         hero: {
             id: string,
             description: string,
@@ -28,14 +26,21 @@ export interface IAction {
             urls: [{ url: string }],
             thumbnail: { path: string, extension: string },
         },
-    };
+        response: {
+            count: number,
+            limit: number,
+            offset: number,
+            total: number
+            results: [],
+        },
+    }
 }
 export interface IState {
     comics: []
     cards: []
     loading: boolean
     heroLoading: boolean
-    page: number
+    currentPage: number
     hero: {
         id: string,
         description: string,
@@ -44,9 +49,9 @@ export interface IState {
         urls: [{ url: string }],
         thumbnail: { path: '', extension: string },
     },
-    pages: number
+    totalPages: number
 }
-export interface SET_HERO_DETAILS_ACTION {
+export type SET_HERO_DETAILS_ACTION = {
     type:string
     id: number
 }
@@ -55,9 +60,5 @@ export type SET_HEROES_ACTION = {
     name: string | null
     offset?: number
     currentPage?: number
-}
-export type HeroDetailsAction = {
-    type: string
-    id: number
 }
 export type DispatchType = (args: SET_HEROES_ACTION) => SET_HEROES_ACTION
