@@ -6,6 +6,7 @@ import MediaCard from '../../components/card';
 import Spinner from '../../components/spinner';
 import './container.css';
 import { serverResponse, IState, DispatchType } from '../../types/types';
+import { onRequestHeroes } from '../../redux/actions/heroesActions';
 
 interface IProps extends RouteComponentProps {
   dispatch?: DispatchType;
@@ -35,20 +36,10 @@ class Container extends React.Component<IProps> {
     const heroName = params.get('name') || null;
     const offset = currentPage * 20 - 20;
     if (lifeCycle === 'DidMount' && dispatch) {
-      dispatch({
-        type: 'HEROES_REQUEST',
-        name: heroName,
-        offset,
-        currentPage,
-      });
+      dispatch(onRequestHeroes(heroName, offset, currentPage));
     }
     if (lifeCycle === 'DidUpdate' && prevProps !== undefined && location.search !== prevProps.location.search && dispatch) {
-      dispatch({
-        type: 'HEROES_REQUEST',
-        name: heroName,
-        offset,
-        currentPage,
-      });
+      dispatch(onRequestHeroes(heroName, offset, currentPage));
     }
   };
 

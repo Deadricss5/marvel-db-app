@@ -1,12 +1,7 @@
-import { put, takeEvery } from 'redux-saga/effects';
+import { put, takeEvery, takeLatest } from 'redux-saga/effects';
 import MarvelApi from '../../api/api';
 import { SET_HEROES_ACTION, SET_HERO_DETAILS_ACTION } from '../../types/types';
-
-const wait = (time: number): Promise<void> => {
-  return new Promise((resolve) => {
-    setTimeout((resolve), time);
-  });
-};
+import { HeroActionTypes, HeroesActionTypes } from '../actions/actionTypes';
 
 async function getHeroes(offset = 0, name?: string | null): Promise<void> {
   const request = await MarvelApi.getHeroByName(name, offset);
@@ -24,31 +19,20 @@ async function getHeroDetails(id: number): Promise<void> {
 }
 
 export function* getHeroDetailsSaga({ id }: SET_HERO_DETAILS_ACTION): Generator {
-  yield put({ type: 'HERO_DETAILS_REQUEST_STARTED' });
+  yield put({ type: HeroActionTypes.ON_REQUEST_HERO_START });
   const hero = yield getHeroDetails(id);
   const comics = yield getComics(id);
-  yield put({ type: 'SET_HERO_DETAILS', payload: { hero, comics } });
-  yield wait(500);
-  yield put({ type: 'HERO_DETAILS_REQUEST_SUCCEEDED' });
+  yield put({ type: HeroActionTypes.ON_REQUEST_HERO_SUCCESS, payload: { hero, comics } });
 }
 
-// eslint-disable-next-line max-len
 export function* getHeroesCardsSaga({ name = null, offset = 1, currentPage }: SET_HEROES_ACTION): Generator {
-  yield put({ type: 'HEROES_REQUEST_STARTED' });
+  yield put({ type: HeroesActionTypes.ON_REQUEST_HEROES_START });
   const response = yield getHeroes(offset, name);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const totalPages = Math.ceil(response.total / 20);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const cards = response.results;
-  yield put({ type: 'SET_HEROES_CARDS', payload: { cards, totalPages, currentPage } });
-  yield wait(500);
-  yield put({ type: 'HEROES_REQUEST_SUCCEEDED' });
+  yield put({ type: HeroesActionTypes.ON_REQUEST_HEROES_SUCCESS, payload: { response, currentPage } });
 }
 export function* watchSaga(): Generator {
-  yield takeEvery('HEROES_REQUEST', getHeroesCardsSaga);
-  yield takeEvery('HERO_DETAILS_REQUEST', getHeroDetailsSaga);
+  yield takeLatest('REQUEST_HEROES', getHeroesCardsSaga);
+  yield takeEvery('REQUEST_HERO', getHeroDetailsSaga);
 }
 
 export default function* rootSaga(): Generator {

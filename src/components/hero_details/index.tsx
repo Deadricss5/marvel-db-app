@@ -4,12 +4,13 @@ import Paper from '@material-ui/core/Paper';
 import Spinner from '../spinner/index';
 import './hero_details.css';
 import { IState, IProps, ServerResponse } from './types';
+import { onRequestHero } from '../../redux/actions/heroActions';
 
 class HeroDetails extends React.Component<IProps, IState> {
   componentDidMount(): void {
     const { match, dispatch } = this.props;
     const { id } = match.params;
-    dispatch({ type: 'HERO_DETAILS_REQUEST', id });
+    dispatch(onRequestHero(id));
   }
 
   render(): JSX.Element {

@@ -1,4 +1,5 @@
 import { IAction } from '../../types/types';
+import { HeroActionTypes, HeroesActionTypes } from '../actions/actionTypes';
 
 const InitState = {
   comics: [],
@@ -18,38 +19,30 @@ const InitState = {
 
 export default function reducer(state = InitState, action: IAction) {
   switch (action.type) {
-    case 'HERO_DETAILS_REQUEST_STARTED':
+    case HeroActionTypes.ON_REQUEST_HERO_START:
       return {
         ...state,
         heroLoading: true,
       };
-    case 'HERO_DETAILS_REQUEST_SUCCEEDED':
-      return {
-        ...state,
-        heroLoading: false,
-      };
-    case 'SET_HERO_DETAILS':
+    case HeroActionTypes.ON_REQUEST_HERO_SUCCESS:
       return {
         ...state,
         hero: action.payload.hero,
         comics: action.payload.comics,
+        heroLoading: false,
       };
-    case 'HEROES_REQUEST_STARTED':
+    case HeroesActionTypes.ON_REQUEST_HEROES_START:
       return {
         ...state,
         loading: true,
       };
-    case 'HEROES_REQUEST_SUCCEEDED':
+    case HeroesActionTypes.ON_REQUEST_HEROES_SUCCESS:
       return {
         ...state,
-        loading: false,
-      };
-    case 'SET_HEROES_CARDS':
-      return {
-        ...state,
-        cards: action.payload.cards,
-        totalPages: action.payload.totalPages,
         currentPage: action.payload.currentPage,
+        cards: action.payload.response.results,
+        totalPages: Math.ceil(action.payload.response.total / 20),
+        loading: false,
       };
     default:
       return state;
