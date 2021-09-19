@@ -19,24 +19,24 @@ const InitState = {
 
 export default function reducer(state = InitState, action: IAction) {
   switch (action.type) {
-    case HeroActionTypes.ON_REQUEST_HERO_START:
+    case HeroActionTypes.REQUEST_HERO_START:
       return {
         ...state,
         heroLoading: true,
       };
-    case HeroActionTypes.ON_REQUEST_HERO_SUCCESS:
+    case HeroActionTypes.REQUEST_HERO_SUCCESS:
       return {
         ...state,
         hero: action.payload.hero,
         comics: action.payload.comics,
         heroLoading: false,
       };
-    case HeroesActionTypes.ON_REQUEST_HEROES_START:
+    case HeroesActionTypes.REQUEST_HEROES_START:
       return {
         ...state,
         loading: true,
       };
-    case HeroesActionTypes.ON_REQUEST_HEROES_SUCCESS:
+    case HeroesActionTypes.REQUEST_HEROES_SUCCESS:
       return {
         ...state,
         currentPage: action.payload.currentPage,
