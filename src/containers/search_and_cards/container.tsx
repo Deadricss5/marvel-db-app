@@ -22,23 +22,23 @@ class Container extends React.Component<IProps> {
   }
 
   componentDidMount(): void {
-    this.dispatchAction('DidMount');
+    this.loadData('DidMount');
   }
 
   componentDidUpdate(prevProps: Readonly<IProps>): void {
-    this.dispatchAction('DidUpdate', prevProps);
+    this.loadData('DidUpdate', prevProps);
   }
 
-  dispatchAction = (lifeCycle: string, prevProps?: Readonly<IProps>): void => {
+  loadData = (lifeCycleMethodType: string, prevProps?: Readonly<IProps>): void => {
     const { location, dispatch } = this.props;
     const params = new URLSearchParams(location.search);
     const currentPage: number = Number(params.get('page')) || 1;
     const heroName = params.get('name') || null;
     const offset = currentPage * 20 - 20;
-    if (lifeCycle === 'DidMount' && dispatch) {
+    if (lifeCycleMethodType === 'DidMount' && dispatch) {
       dispatch(onRequestHeroes(heroName, offset, currentPage));
     }
-    if (lifeCycle === 'DidUpdate' && prevProps !== undefined && location.search !== prevProps.location.search && dispatch) {
+    if (lifeCycleMethodType === 'DidUpdate' && prevProps !== undefined && location.search !== prevProps.location.search && dispatch) {
       dispatch(onRequestHeroes(heroName, offset, currentPage));
     }
   };
