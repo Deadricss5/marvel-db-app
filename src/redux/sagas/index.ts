@@ -33,8 +33,8 @@ export function* getHeroDetailsSaga({ id }: SET_HERO_DETAILS_ACTION): Generator 
     const hero = yield getHeroDetails(id);
     const comics = yield getComics(id);
     yield put({ type: HeroActionTypes.REQUEST_HERO_SUCCESS, payload: { hero, comics } });
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    yield put({ type: HeroActionTypes.REQUEST_HERO_ERROR, payload: { error } });
   }
 }
 
@@ -43,8 +43,8 @@ export function* getHeroesCardsSaga({ name = null, offset = 1, currentPage }: SE
     yield put({ type: HeroesActionTypes.REQUEST_HEROES_START });
     const response = yield getHeroes(offset, name);
     yield put({ type: HeroesActionTypes.REQUEST_HEROES_SUCCESS, payload: { response, currentPage } });
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    yield put({ type: HeroesActionTypes.REQUEST_HEROES_ERROR, payload: { error } });
   }
 }
 export function* watchSaga(): Generator {

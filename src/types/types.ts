@@ -16,6 +16,7 @@ export interface IMarvelApi {
 export interface IAction{
     type: string,
     payload: {
+        error: Error;
         currentPage: number,
         comics: [],
         hero: {

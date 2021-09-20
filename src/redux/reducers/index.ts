@@ -31,6 +31,11 @@ export default function reducer(state = InitState, action: IAction) {
         comics: action.payload.comics,
         heroLoading: false,
       };
+    case HeroActionTypes.REQUEST_HERO_ERROR:
+      return {
+        ...state,
+        error: action.payload.error,
+      };
     case HeroesActionTypes.REQUEST_HEROES_START:
       return {
         ...state,
@@ -43,6 +48,11 @@ export default function reducer(state = InitState, action: IAction) {
         cards: action.payload.response.results,
         totalPages: Math.ceil(action.payload.response.total / 20),
         loading: false,
+      };
+    case HeroesActionTypes.REQUEST_HEROES_ERROR:
+      return {
+        ...state,
+        error: action.payload.error,
       };
     default:
       return state;
