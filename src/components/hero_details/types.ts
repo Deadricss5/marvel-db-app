@@ -4,16 +4,18 @@ type DispatchType = (args: SET_HERO_DETAILS_ACTION) => SET_HERO_DETAILS_ACTION
 export interface IProps {
   dispatch: DispatchType;
   heroLoading: boolean;
-  hero: {
-    id: number;
-    description: string,
-    name: string,
-    title: string;
-    urls: [ { url: string } ];
-    thumbnail: { path: string, extension: string};
+  HeroDetails: {
+    hero: {
+      id: number;
+      description: string,
+      name: string,
+      title: string;
+      urls: [ { url: string } ];
+      thumbnail: { path: string, extension: string};
+    }
+    heroLoading: boolean,
+    comics: [],
   }
-  loading: boolean,
-  comics: [],
   match: {
     params: {
       id: number;

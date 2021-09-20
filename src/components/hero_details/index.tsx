@@ -14,7 +14,11 @@ class HeroDetails extends React.Component<IProps, IState> {
   }
 
   render(): JSX.Element {
-    const { hero, comics, heroLoading } = this.props;
+    const {
+      HeroDetails: {
+        hero, comics, heroLoading,
+      },
+    } = this.props;
     if (heroLoading) {
       return (<Spinner />);
     }

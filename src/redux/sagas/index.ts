@@ -29,7 +29,6 @@ async function getHeroDetails(id: number): Promise<void> {
 
 export function* getHeroDetailsSaga({ id }: SET_HERO_DETAILS_ACTION): Generator {
   try {
-    yield put({ type: HeroActionTypes.REQUEST_HERO_START });
     const hero = yield getHeroDetails(id);
     const comics = yield getComics(id);
     yield put({ type: HeroActionTypes.REQUEST_HERO_SUCCESS, payload: { hero, comics } });
@@ -40,7 +39,6 @@ export function* getHeroDetailsSaga({ id }: SET_HERO_DETAILS_ACTION): Generator 
 
 export function* getHeroesCardsSaga({ name = null, offset = 1, currentPage }: SET_HEROES_ACTION): Generator {
   try {
-    yield put({ type: HeroesActionTypes.REQUEST_HEROES_START });
     const response = yield getHeroes(offset, name);
     yield put({ type: HeroesActionTypes.REQUEST_HEROES_SUCCESS, payload: { response, currentPage } });
   } catch (error) {
