@@ -3,7 +3,6 @@ import { SET_HERO_DETAILS_ACTION } from '../../types/types';
 type DispatchType = (args: SET_HERO_DETAILS_ACTION) => SET_HERO_DETAILS_ACTION
 export interface IProps {
   dispatch: DispatchType;
-  heroLoading: boolean;
   HeroDetails: {
     hero: {
       id: number;
