@@ -10,7 +10,7 @@ import { onRequestHeroes } from '../../redux/actions/heroesActions';
 
 interface IProps extends RouteComponentProps {
   dispatch?: DispatchType;
-  Heroes?: {
+  heroes?: {
     loading: boolean;
     cards: [];
     totalPages: number;
@@ -49,15 +49,15 @@ class Container extends React.Component<IProps> {
     const {
       history,
       location,
-      Heroes,
+      heroes,
     } = this.props;
     let cards;
     let loading;
     let totalPages;
-    if (Heroes !== undefined) {
-      cards = Heroes.cards;
-      loading = Heroes.loading;
-      totalPages = Heroes.totalPages;
+    if (heroes !== undefined) {
+      cards = heroes.cards;
+      loading = heroes.loading;
+      totalPages = heroes.totalPages;
     }
     const params = new URLSearchParams(location.search);
     const page: number = Number(params.get('page')) || 1;

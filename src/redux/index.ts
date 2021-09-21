@@ -6,8 +6,8 @@ import {
 } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
-import HeroDetailsReducer from './reducers/HeroDetailsReducer';
-import Heroes from './reducers/Heroes';
+import heroDetails from './reducers/heroDetails';
+import heroes from './reducers/heroes';
 
 declare global {
   interface Window {
@@ -18,8 +18,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const sagaMiddleware = createSagaMiddleware();
 const rootReducer = combineReducers({
-  HeroDetails: HeroDetailsReducer,
-  Heroes,
+  heroDetails,
+  heroes,
 });
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware)));

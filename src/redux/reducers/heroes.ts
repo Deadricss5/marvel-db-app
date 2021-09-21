@@ -25,6 +25,7 @@ export default function Heroes(state = InitState, action: HeroesAction) {
       return {
         ...state,
         error: action.payload.error,
+        loading: false,
       };
     default:
       return state;

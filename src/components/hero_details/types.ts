@@ -3,7 +3,7 @@ import { SET_HERO_DETAILS_ACTION } from '../../types/types';
 type DispatchType = (args: SET_HERO_DETAILS_ACTION) => SET_HERO_DETAILS_ACTION
 export interface IProps {
   dispatch: DispatchType;
-  HeroDetails: {
+  heroDetails: {
     hero: {
       id: number;
       description: string,
@@ -12,7 +12,7 @@ export interface IProps {
       urls: [ { url: string } ];
       thumbnail: { path: string, extension: string};
     }
-    heroLoading: boolean,
+    loading: boolean,
     comics: [],
   }
   match: {

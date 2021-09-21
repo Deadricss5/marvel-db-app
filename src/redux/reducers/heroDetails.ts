@@ -14,24 +14,25 @@ const InitState = {
   },
 };
 
-export default function HeroDetailsReducer(state = InitState, action: HeroDetailsAction) {
+export default function HeroDetails(state = InitState, action: HeroDetailsAction) {
   switch (action.type) {
     case HeroActionTypes.REQUEST_HERO:
       return {
         ...state,
-        heroLoading: true,
+        loading: true,
       };
     case HeroActionTypes.REQUEST_HERO_SUCCESS:
       return {
         ...state,
         hero: action.payload.hero,
         comics: action.payload.comics,
-        heroLoading: false,
+        loading: false,
       };
     case HeroActionTypes.REQUEST_HERO_ERROR:
       return {
         ...state,
         error: action.payload.error,
+        loading: false,
       };
     default:
       return state;
