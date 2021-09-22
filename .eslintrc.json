@@ -26,6 +26,10 @@
   "plugins": ["react", "@typescript-eslint"],
   
   "rules": {
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "error",
+    "max-len": "off",
+    "no-useless-constructor": "off",
     "arrow-body-style": ["error", "always"],
     "linebreak-style": 0,
     "dot-notation": [1, { "allowKeywords": false }],
