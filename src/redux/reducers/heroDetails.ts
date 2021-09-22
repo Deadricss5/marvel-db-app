@@ -3,7 +3,7 @@ import { HeroActionTypes } from '../actions/actionTypes';
 
 const InitState = {
   comics: [],
-  heroLoading: true,
+  loading: true,
   hero: {
     id: '',
     description: '',
