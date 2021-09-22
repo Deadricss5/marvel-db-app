@@ -54,10 +54,8 @@ class Container extends React.Component<IProps> {
     let cards;
     let loading;
     let totalPages;
-    if (heroes !== undefined) {
-      cards = heroes.cards;
-      loading = heroes.loading;
-      totalPages = heroes.totalPages;
+    if (heroes) {
+      ({ cards, loading, totalPages } = heroes);
     }
     const params = new URLSearchParams(location.search);
     const page: number = Number(params.get('page')) || 1;
