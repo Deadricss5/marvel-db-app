@@ -49,16 +49,13 @@ export interface IState {
     comics: []
     cards: []
     loading: boolean
-    heroLoading: boolean
     currentPage: number
-    hero: {
-        id: string,
-        description: string,
-        name: string,
-        title: string,
-        urls: [{ url: string }],
-        thumbnail: { path: '', extension: string },
-    },
+    heroes: {
+        loading: boolean;
+        cards: [];
+        totalPages: number;
+        currentPage: number;
+    }
     totalPages: number
 }
 export type SET_HERO_DETAILS_ACTION = {
